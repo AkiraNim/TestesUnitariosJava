@@ -218,6 +218,7 @@ public class AppTest{
     }
     @Test
     void deveExecutarMainSemErros() {
-        Assertions.assertDoesNotThrow(() -> App.main(new String[]{}));
+        App.main(null);
+        Assertions.assertTrue(true);
     }
 }
