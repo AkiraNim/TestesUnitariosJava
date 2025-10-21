@@ -11,7 +11,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
 public class ProductService {
-    private String filePath = "C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagens";
+    private String filePath = "C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagens\\";
 
     private String getFileExtension(Path path) {
         String filename = path.getFileName().toString();

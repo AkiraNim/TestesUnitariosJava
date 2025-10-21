@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 
+import java.io.File;
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductServiceTest {
@@ -16,35 +19,55 @@ public class ProductServiceTest {
     @BeforeEach
     public void setup() {
         productService = new ProductService();
-        product1 = new Product(1, "Hot Dog", 10.4f, "C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
+        product1 = new Product(1, "Hot Dog", 10.4f, "C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
     }
 
     @Test
     public void testarSalvarProdutoComImagemValida(){
-        product1.setImage("C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
+        product1.setImage("C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
 
-        boolean result = productService.save(product1);
-
-        assertTrue(result);
+        assertTrue(productService.save(product1));
     }
 
     @Test
     public void testarSalvarProdutoComImagemInvalida(){
-        product1.setImage("C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor2.png");
+        product1.setImage("C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor2.png");
 
-        boolean result = productService.save(product1);
-
-        assertFalse(result);
+        assertFalse(productService.save(product1));
     }
 
 
     @Test
+    public void verificarAtualizarImagemDoProduto(){
+        productService.save(product1);
+
+        Product productAtualizado = new Product(1, "Hot Doggers", 10.4f, "C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
+        productService.update(productAtualizado);
+
+        File arquivo = new File(productService.getImagePathById(product1.getId()));
+        assertTrue(arquivo.exists());
+    }
+
+    @Test
+    public void verificarRemoverImagemDoProduto(){
+        productService.save(product1);
+
+        productService.remove(product1.getId());
+
+        assertThrows(NoSuchElementException.class,() -> {
+            File arquivo = new File(
+                    productService.getImagePathById(product1.getId()));
+        });
+
+    }
+
+    @Test
     public void obterCaminhoDaImagemPorId(){
-        product1.setImage("C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png");
         productService.save(product1);
 
         String imagePath = productService.getImagePathById(product1.getId());
 
-        assertEquals("C:\\Users\\Akira\\Desktop\\Atividades\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagensOriginais\\grassFloor1.png", imagePath);
+        assertEquals("C:\\Users\\aluno.fsa\\Desktop\\Ayanami Programas\\TestesUnitariosJava\\Exercicio3\\NLayerLanche\\imagens\\1.png", imagePath);
+
     }
 }
