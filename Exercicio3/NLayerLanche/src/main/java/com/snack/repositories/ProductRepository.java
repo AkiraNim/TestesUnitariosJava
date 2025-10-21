@@ -23,11 +23,11 @@ public class ProductRepository {
     }
 
     public void append(Product product) {
-//        products.add(product);
+        products.add(product);
     }
 
-    public void remove(int id) {
-        products.removeIf(product -> product.getId() == id);
+    public boolean remove(int id) {
+        return products.removeIf(product -> product.getId() == id);
     }
 
     public void update(int id, Product product) {
